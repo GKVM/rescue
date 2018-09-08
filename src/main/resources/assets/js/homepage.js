@@ -41,7 +41,7 @@ function register() {
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json));
-                window.location = "assets/landingpage.html";
+                window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
             }
@@ -51,7 +51,38 @@ function register() {
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json.responseText));
-                window.location = "assets/landingpage.html";
+                window.location = "landingpage.html";
+            } else {
+                $('#register-form-error').html("Something is not working");
+            }
+            console.log('Error in sign up ' + json.responseText);
+        }
+    });
+}
+
+def rescue(){
+var data = $('#rescueform');
+    $.ajax({
+        type: "POST",
+        url: `${baseUrl}/user/rescue`,
+        data: data.serialize(),
+        dataType: "form/url-encoded",
+        success: function success(json) {
+            console.log("success.");
+            if (json != null) {
+                console.log(json);
+                localStorage.setItem('user', JSON.stringify(json));
+                window.location = "landingpage.html";
+            } else {
+                $('#register-form-error').html("Something is not working");
+            }
+        },
+        error: function error(json, ajaxOptions, thrownError) {
+            $('#register-form-error').html(JSON.parse(json.responseText).message);
+            if (json != null) {
+                console.log(json);
+                localStorage.setItem('user', JSON.stringify(json.responseText));
+                window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
             }
