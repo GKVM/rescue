@@ -12,9 +12,6 @@ function showLogin() {
     $('#login').show();
 }
 
-/*$('#register-form').onsubmit = signUp();
-$('#login-form').onsubmit = signIn();*/
-
 function register() {
     var lat = 0;
     var lon = 0;
@@ -41,11 +38,10 @@ function register() {
         dataType: "form/url-encoded",
         success: function success(json) {
             console.log("success.");
-            console
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json));
-                window.location = "/langingpage.html";
+                window.location = "assets/landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
             }
@@ -55,7 +51,7 @@ function register() {
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json.responseText));
-                window.location = "/langingpage.html";
+                window.location = "assets/landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
             }
@@ -63,27 +59,3 @@ function register() {
         }
     });
 }
-
-// function signIn() {
-//     console.log("sign in");
-//     $.ajax({
-//         type: "POST",
-//         url: baseUrl + '/candidate/signin',
-//         data: $('#login-form').serialize(),
-//         dataType: "json",
-//         success: function success(json) {
-//             console.log("success.");
-//             if (json != null) {
-//                 console.log(json);
-//                 localStorage.setItem('user', JSON.stringify(json));
-//                 window.location = "/landingpage.html";
-//             } else {
-//                 $('#login-form-error').html("Something broke.");
-//             }
-//         },
-//         error: function error(xhr, ajaxOptions, thrownError) {
-//             $('#login-form-error').html(JSON.parse(xhr.responseText).message);
-//             console.log('Error in sign in ' + xhr.responseText);
-//         }
-//     });
-// }
