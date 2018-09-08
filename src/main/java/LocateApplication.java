@@ -10,6 +10,7 @@ import io.dropwizard.forms.MultiPartBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import manager.BatchParser;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -20,6 +21,7 @@ import javax.servlet.FilterRegistration;
 import javax.ws.rs.client.Client;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Timer;
 
 public class LocateApplication extends io.dropwizard.Application<Configuration> {
     public static void main(String[] args) throws Exception {
@@ -62,6 +64,10 @@ public class LocateApplication extends io.dropwizard.Application<Configuration> 
         //Initialize DAOs
         environment.jersey().setUrlPattern("/api");
         final UserDao userDao = new UserDao(datastore);
+
+        Timer timer = new Timer();
+        //timer.scheduleAtFixedRate(new BatchParser(userDao), 1000L, 5 * 1000L);
+
         final UserResource userResource = new UserResource(userDao);
         environment.jersey().register(userResource);
 

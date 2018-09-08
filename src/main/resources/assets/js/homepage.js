@@ -34,16 +34,17 @@ function login() {
 
     var data = $('#registration-form').append("latitude", lat).append("longitude", lon);
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: `${baseUrl}/user/register`,
         data: data.serialize(),
-        dataType: "form/url-encoded",
         success: function success(json) {
             console.log("success.");
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json));
                 localStorage.setItem('id', json.id);
+                console.log("id");
+                console.log(json.id);
                 window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
@@ -55,11 +56,14 @@ function login() {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json.responseText));
                 localStorage.setItem('id', json.id);
+                console.log("id");
+                console.log(json.id);
                 window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
             }
             console.log('Error in sign up ' + json.responseText);
+            console.log(json);
         }
     });
 }
@@ -69,13 +73,12 @@ function rescue() {
     let user;
     let serializedData = localStorage.getItem('user');
             user = JSON.parse(serializedData);
-    var id = localStorage.getItem('id');
+    var id = localStorage.getItem("id");
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: `${baseUrl}/user/rescue?user_id=${id}`,
         data: data.serialize(),
-        dataType: "form/url-encoded",
         success: function success(json) {
             console.log("success.");
             if (json != null) {

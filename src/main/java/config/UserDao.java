@@ -43,6 +43,11 @@ public class UserDao extends BasicDAO<User, ObjectId> {
         return this.createQuery().asList();
     }
 
+    public List<User> getUsersUpdatedAfter(Long u) {
+        return this.createQuery()
+                .field("updated").greaterThan(u).asList();
+    }
+
     public void addNeeds(Set<String> items, ObjectId id) {
         Query<User> query = this.createQuery()
                 .field("_id").equal(id);

@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 @Path("user")
@@ -30,26 +31,26 @@ public class UserResource {
         this.userDao = userService;
     }
 
-    @POST
+    @GET
     @Path("register")
     public User request(
-            @FormParam("name") String name,
-            @FormParam("phone") String phone,
-            @DefaultValue("0") @FormParam("latitude") Double latitude,
-            @DefaultValue("0") @FormParam("longitude") Double longitude
+            @QueryParam("name") String name,
+            @QueryParam("phone") String phone,
+            @DefaultValue("0") @QueryParam("latitude") Double latitude,
+            @DefaultValue("0") @QueryParam("longitude") Double longitude
     ) {
         User user = new User(new ObjectId(), phone, name, new double[]{latitude, longitude}, System.currentTimeMillis());
         userDao.createUser(user);
         return user;
     }
 
-    @POST
+    @GET
     @Path("rescue")
     public User rescue(
-            @FormParam("request") String request,
-            @DefaultValue("0") @FormParam("latitude") Double latitude,
-            @DefaultValue("0") @FormParam("longitude") Double longitude,
-            @FormParam("user_id") String idStr
+            @QueryParam("request") String request,
+            @DefaultValue("0") @QueryParam("latitude") Double latitude,
+            @DefaultValue("0") @QueryParam("longitude") Double longitude,
+            @QueryParam("user_id") String idStr
     ) {
         ObjectId userId;
         if(idStr == "undefined")
@@ -58,7 +59,9 @@ public class UserResource {
             userId = new ObjectId(idStr);
         User user = userDao.getUser(userId).get();
         user.setRescue(request);
-        user.setLocation(new double[]{latitude, longitude});
+        Random rand = new Random();
+
+        user.setLocation(new double[]{rand.nextInt(50) + 1, rand.nextInt(50) + 1});
         userDao.addRequest(userId, user);
         return user;
     }
