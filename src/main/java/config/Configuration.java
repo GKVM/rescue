@@ -64,5 +64,4 @@ public class Configuration extends io.dropwizard.Configuration {
     public void setSecret(String secret) {
         this.secret = secret;
     }
-
 }
