@@ -66,7 +66,9 @@ public class LocateApplication extends io.dropwizard.Application<Configuration> 
         final UserDao userDao = new UserDao(datastore);
 
         Timer timer = new Timer();
-        //timer.scheduleAtFixedRate(new BatchParser(userDao), 1000L, 5 * 1000L);
+        timer.scheduleAtFixedRate(new BatchParser(userDao), 1000L, 5 * 1000L);
+
+
 
         final UserResource userResource = new UserResource(userDao);
         environment.jersey().register(userResource);

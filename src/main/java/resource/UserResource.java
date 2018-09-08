@@ -39,7 +39,8 @@ public class UserResource {
             @DefaultValue("0") @QueryParam("latitude") Double latitude,
             @DefaultValue("0") @QueryParam("longitude") Double longitude
     ) {
-        User user = new User(new ObjectId(), phone, name, new double[]{latitude, longitude}, System.currentTimeMillis());
+        Random rand = new Random();
+        User user = new User(new ObjectId(), phone, name, new double[]{rand.nextInt(50) + 1, rand.nextInt(50) + 1}, System.currentTimeMillis());
         userDao.createUser(user);
         return user;
     }
@@ -50,19 +51,14 @@ public class UserResource {
             @QueryParam("request") String request,
             @DefaultValue("0") @QueryParam("latitude") Double latitude,
             @DefaultValue("0") @QueryParam("longitude") Double longitude,
-            @QueryParam("user_id") String idStr
+            @QueryParam("user_id") ObjectId id
     ) {
-        ObjectId userId;
-        if(idStr == "undefined")
-            userId = new ObjectId();
-        else
-            userId = new ObjectId(idStr);
-        User user = userDao.getUser(userId).get();
+        User user = userDao.getUser(id).get();
         user.setRescue(request);
         Random rand = new Random();
 
         user.setLocation(new double[]{rand.nextInt(50) + 1, rand.nextInt(50) + 1});
-        userDao.addRequest(userId, user);
+        userDao.addRequest(id, user);
         return user;
     }
 

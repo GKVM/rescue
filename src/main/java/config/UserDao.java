@@ -58,7 +58,6 @@ public class UserDao extends BasicDAO<User, ObjectId> {
         ops.set("updated", System.currentTimeMillis());
         if (items != null)
             ops.set("items", items);
-
         final UpdateResults updateResults = this.update(query, ops);
     }
 
@@ -70,7 +69,8 @@ public class UserDao extends BasicDAO<User, ObjectId> {
         ops.set("updated", System.currentTimeMillis());
         if (user.getLocation() != null)
             ops.set("location", user.getLocation());
-
+        if (user.getRescue() != null)
+            ops.set("rescue", user.getRescue());
         final UpdateResults updateResults = this.update(query, ops);
     }
 
