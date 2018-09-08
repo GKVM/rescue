@@ -62,7 +62,6 @@ public class UserResource {
         return user;
     }
 
-
     @GET
     @Path("getbyphone")
     public Optional<User> getBynum(
