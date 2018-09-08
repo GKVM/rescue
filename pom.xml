@@ -7,18 +7,6 @@
     <groupId>locate</groupId>
     <artifactId>locate</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <properties>
         <dropwizard.version>1.1.0</dropwizard.version>
@@ -180,7 +168,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>LocateApplication</mainClass>
+                                    <mainClass>Application</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -189,4 +177,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>
