@@ -30,6 +30,7 @@ public class Rescue {
     private String name;
     @Indexed(IndexDirection.GEO2D)
     private double[] location = new double[2];
+    private String request;
     private Set<String> items;
     private Long updated;
 
@@ -42,11 +43,13 @@ public class Rescue {
             @JsonProperty("phone") String phone,
             @JsonProperty("name") String name,
             @JsonProperty("location") final double[] location,
+            @JsonProperty("request") String request,
             @JsonProperty("updated") Long updated
     ) {
         this.id = id;
         this.phone = phone;
         this.name = name;
+        this.request = request;
         this.updated = updated;
         this.location = location;
     }
@@ -73,5 +76,9 @@ public class Rescue {
 
     public Long getUpdated() {
         return updated;
+    }
+
+    public String getRequest() {
+        return request;
     }
 }

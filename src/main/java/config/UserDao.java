@@ -51,7 +51,20 @@ public class UserDao extends BasicDAO<User, ObjectId> {
             return;
         }
         ops.set("updated", System.currentTimeMillis());
-        ops.set("items", items);
+        if (items != null)
+            ops.set("items", items);
+
+        final UpdateResults updateResults = this.update(query, ops);
+    }
+
+    public void addRequest(ObjectId id, User user) {
+        Query<User> query = this.createQuery()
+                .field("_id").equal(id);
+        final UpdateOperations<User> ops = this.createUpdateOperations();
+
+        ops.set("updated", System.currentTimeMillis());
+        if (user.getLocation() != null)
+            ops.set("location", user.getLocation());
 
         final UpdateResults updateResults = this.update(query, ops);
     }

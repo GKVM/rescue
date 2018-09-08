@@ -29,6 +29,7 @@ public class User {
     private ObjectId id;
     private String phone;
     private String name;
+    private String rescue;
     @Indexed(IndexDirection.GEO2D)
     private double[] location = new double[2];
     private Set<String> items;
@@ -64,9 +65,6 @@ public class User {
         return name;
     }
 
-    public double[] getLocation() {
-        return location;
-    }
 
     public Set<String> getItems() {
         return items;
@@ -74,5 +72,21 @@ public class User {
 
     public Long getUpdated() {
         return updated;
+    }
+
+    public double[] getLocation() {
+        return location;
+    }
+
+    public void setLocation(double[] location) {
+        this.location = location;
+    }
+
+    public String getRescue() {
+        return rescue;
+    }
+
+    public void setRescue(String rescue) {
+        this.rescue = rescue;
     }
 }

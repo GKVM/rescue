@@ -37,12 +37,32 @@ public class UserResource {
             @FormParam("phone") String phone,
             @DefaultValue("0") @FormParam("latitude") Double latitude,
             @DefaultValue("0") @FormParam("longitude") Double longitude
-
     ) {
         User user = new User(new ObjectId(), phone, name, new double[]{latitude, longitude}, System.currentTimeMillis());
         userDao.createUser(user);
         return user;
     }
+
+    @POST
+    @Path("rescue")
+    public User rescue(
+            @FormParam("request") String request,
+            @DefaultValue("0") @FormParam("latitude") Double latitude,
+            @DefaultValue("0") @FormParam("longitude") Double longitude,
+            @FormParam("user_id") String idStr
+    ) {
+        ObjectId userId;
+        if(idStr == "undefined")
+            userId = new ObjectId();
+        else
+            userId = new ObjectId(idStr);
+        User user = userDao.getUser(userId).get();
+        user.setRescue(request);
+        user.setLocation(new double[]{latitude, longitude});
+        userDao.addRequest(userId, user);
+        return user;
+    }
+
 
     @GET
     @Path("getbyphone")
@@ -58,20 +78,20 @@ public class UserResource {
     public User addItems(
             @QueryParam("user_id") ObjectId id,
             @QueryParam("items") Set<String> items
-    ){
+    ) {
         userDao.addNeeds(items, id);
         return userDao.get(id);
     }
 
     @GET
     @Path("get")
-    public User get(@QueryParam("user_id") ObjectId userId){
+    public User get(@QueryParam("user_id") ObjectId userId) {
         return userDao.get(userId);
     }
 
     @GET
     @Path("all")
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userDao.getUsers();
     }
 
@@ -88,7 +108,7 @@ public class UserResource {
     @GET
     @Path("process")
     public String exportData() throws Exception {
-        String s =  readFileAsString("/Users/gopikrishnav.m./Downloads/rescue/d0.json");
+        String s = readFileAsString("/Users/gopikrishnav.m./Downloads/rescue/d0.json");
         //System.out.println(s.exists());
 
         //System.out.println(s.substring(0,10));
@@ -99,7 +119,7 @@ public class UserResource {
         return "Ok";
     }
 
-    public static String readFileAsString(String fileName)throws Exception {
+    public static String readFileAsString(String fileName) throws Exception {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;

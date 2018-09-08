@@ -12,11 +12,13 @@ function showLogin() {
     $('#login').show();
 }
 
-function register() {
+function login() {
     var lat = 0;
     var lon = 0;
+
     navigator.geolocation.getCurrentPosition((loc) => {
         navigator.geolocation.getCurrentPosition(showPosition);
+
         function showPosition(position) {
             x.innerHTML = "Latitude: " + position.coords.latitude +
                 "<br>Longitude: " + position.coords.longitude;
@@ -24,11 +26,11 @@ function register() {
             lat = position.coords.latitude
             lon = position.coords.longitude
         }
+
         //lat = position.coords.latitude
         //lon = position.coords.longitude;
         console.log('The location in lat lon format is: [', loc.coords.latitude, ',', loc.coords.longitude, ']');
     })
-
 
     var data = $('#registration-form').append("latitude", lat).append("longitude", lon);
     $.ajax({
@@ -41,6 +43,7 @@ function register() {
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json));
+                localStorage.setItem('id', json.id);
                 window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
@@ -51,6 +54,7 @@ function register() {
             if (json != null) {
                 console.log(json);
                 localStorage.setItem('user', JSON.stringify(json.responseText));
+                localStorage.setItem('id', json.id);
                 window.location = "landingpage.html";
             } else {
                 $('#register-form-error').html("Something is not working");
@@ -60,11 +64,16 @@ function register() {
     });
 }
 
-def rescue(){
-var data = $('#rescueform');
+function rescue() {
+    var data = $('#rescueform');
+    let user;
+    let serializedData = localStorage.getItem('user');
+            user = JSON.parse(serializedData);
+    var id = localStorage.getItem('id');
+
     $.ajax({
         type: "POST",
-        url: `${baseUrl}/user/rescue`,
+        url: `${baseUrl}/user/rescue?user_id=${id}`,
         data: data.serialize(),
         dataType: "form/url-encoded",
         success: function success(json) {
