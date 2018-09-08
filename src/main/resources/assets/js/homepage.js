@@ -47,7 +47,7 @@ function login() {
                 console.log(json.id);
                 window.location = "landingpage.html";
             } else {
-                $('#register-form-error').html("Something is not working");
+                //$('#register-form-error').html("Something is not working");
                 window.location = "landingpage.html";
             }
         },
@@ -61,7 +61,7 @@ function login() {
                 console.log(json.id);
                 window.location = "landingpage.html";
             } else {
-                $('#register-form-error').html("Something is not working");
+                //$('#register-form-error').html("Something is not working");
                 window.location = "landingpage.html";
             }
             console.log('Error in sign up ' + json.responseText);
