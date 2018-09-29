@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018. Timeline. (http://www.tline.xyz) Gopikrishna V.M.
- */
-
 package manager;
 
 import config.User;

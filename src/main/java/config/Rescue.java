@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2017. Timeline. (http://www.tline.xyz) Gopikrishna V.M.
- */
-
 package config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
